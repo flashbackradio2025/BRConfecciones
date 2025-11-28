@@ -15,16 +15,44 @@
       margin: 0;
       padding: 0;
       font-family: 'Montserrat', sans-serif;
-      background: #1b1410; /* Marrón oscuro cálido */
+      background: #1b1410; /* Fallback si el video no carga */
       color: #ffffff;
       line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Contenedor del video de fondo */
+    .video-fondo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .video-fondo video {
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+      opacity: 0.85; /* transparencia para mejor legibilidad */
     }
 
     .header {
       text-align: center;
       padding: 40px 20px;
-      background: #140f0c;
+      background: rgba(20, 15, 12, 0.85); /* fondo semi-transparente */
+      backdrop-filter: blur(2px); /* suaviza el fondo detrás */
       border-bottom: 1px solid #3a2e25;
+      position: relative;
+      z-index: 1;
     }
 
     .header img {
@@ -59,16 +87,20 @@
       padding: 30px 20px;
       max-width: 1200px;
       margin: 0 auto;
+      position: relative;
+      z-index: 1;
     }
 
     .producto {
       width: 100%;
       max-width: 280px;
-      background: #1f1813;
+      background: rgba(31, 24, 19, 0.88); /* marrón translúcido */
+      backdrop-filter: blur(2px);
       border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid #3a2e25;
     }
 
     .producto:hover {
@@ -77,13 +109,13 @@
     }
 
     .producto img {
-  width: 100%;
-  height: 200px;
-  object-fit: contain;
-  object-position: center;
-  border-bottom: 1px solid #3a2e25;
-  background: #1f1813;
-}
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
+      object-position: center;
+      border-bottom: 1px solid #3a2e25;
+      background: #1f1813;
+    }
 
     .producto .info {
       padding: 16px;
@@ -105,9 +137,12 @@
     .contacto {
       text-align: center;
       padding: 40px 20px;
-      background: #17110d;
+      background: rgba(23, 17, 13, 0.85);
+      backdrop-filter: blur(2px);
       margin-top: 30px;
       border-top: 1px solid #3a2e25;
+      position: relative;
+      z-index: 1;
     }
 
     .contacto h2 {
@@ -147,7 +182,10 @@
       color: #b8a580;
       border-top: 1px solid #3a2e25;
       margin-top: 20px;
-      background: #140f0c;
+      background: rgba(20, 15, 12, 0.85);
+      backdrop-filter: blur(2px);
+      position: relative;
+      z-index: 1;
     }
 
     footer a {
@@ -163,10 +201,21 @@
       .producto {
         max-width: 95%;
       }
+      .video-fondo video {
+        opacity: 0.75; /* más transparente en móvil */
+      }
     }
   </style>
 </head>
 <body>
+
+  <!-- Fondo de video -->
+  <div class="video-fondo">
+    <video autoplay muted loop playsinline>
+      <source src="img/fondo-br.mp4" type="video/mp4">
+      Tu navegador no soporta el video de fondo.
+    </video>
+  </div>
 
   <div class="header">
     <img src="img/Logo1.jpg" alt="BR Confecciones - Logo">
@@ -224,8 +273,8 @@
   </footer>
 
 </body>
-
 </html>
+
 
 
 
