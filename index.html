@@ -104,9 +104,12 @@
     }
 
     .producto:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 6px 18px rgba(212, 175, 55, 0.25);
-    }
+  transform: translateY(-6px);
+  box-shadow:
+    0 10px 20px rgba(0, 0, 0, 0.4),               /* sombra inferior más suave */
+    inset 0 0 12px rgba(212, 175, 55, 0.15),     /* brillo interno dorado */
+    0 0 16px rgba(212, 175, 55, 0.2);            /* halo dorado exterior sutil */
+}
 
     .producto img {
       width: 100%;
@@ -274,6 +277,7 @@
 
 </body>
 </html>
+
 
 
 
