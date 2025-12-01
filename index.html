@@ -15,7 +15,7 @@
       margin: 0;
       padding: 0;
       font-family: 'Montserrat', sans-serif;
-      background: #1b1410; /* Fallback si el video no carga */
+      background: #1b1410;
       color: #ffffff;
       line-height: 1.6;
       overflow-x: hidden;
@@ -27,7 +27,7 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 100%;
+      height: 100vh;
       z-index: -1;
       overflow: hidden;
     }
@@ -42,17 +42,24 @@
       left: 50%;
       transform: translate(-50%, -50%);
       object-fit: cover;
-      opacity: 0.85; /* transparencia para mejor legibilidad */
+      opacity: 0.85;
     }
 
     .header {
       text-align: center;
-      padding: 40px 20px;
-      background: rgba(20, 15, 12, 0.85); /* fondo semi-transparente */
-      backdrop-filter: blur(2px); /* suaviza el fondo detrás */
+      padding: 60px 20px 40px;
+      background: rgba(20, 15, 12, 0.85);
+      backdrop-filter: blur(2px);
       border-bottom: 1px solid #3a2e25;
       position: relative;
       z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      max-height: 100vh;
+      overflow: hidden;
     }
 
     .header img {
@@ -61,14 +68,30 @@
       margin: 0 auto 20px;
       display: block;
       filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.3));
+      opacity: 0;
+      transform: scale(0.9);
+      transition: opacity 1.5s ease-out, transform 1.5s ease-out;
+    }
+
+    .header.show-logo img {
+      opacity: 1;
+      transform: scale(1);
     }
 
     .header h1 {
       font-family: 'Cormorant Garamond', serif;
       font-size: 2.4em;
-      color: #f5e6cc; /* Dorado suave */
+      color: #f5e6cc;
       margin: 15px 0;
       text-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 2s ease-out, transform 2s ease-out;
+    }
+
+    .header.show-text h1 {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .header p {
@@ -77,6 +100,14 @@
       max-width: 700px;
       margin: 20px auto;
       font-weight: 400;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 2.5s ease-out, transform 2.5s ease-out;
+    }
+
+    .header.show-text p {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .galeria {
@@ -94,22 +125,22 @@
     .producto {
       width: 100%;
       max-width: 280px;
-      background: rgba(31, 24, 19, 0.88); /* marrón translúcido */
+      background: rgba(31, 24, 19, 0.88);
       backdrop-filter: blur(2px);
       border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
       border: 1px solid #3a2e25;
     }
 
     .producto:hover {
-  transform: translateY(-6px);
-  box-shadow:
-    0 12px 24px rgba(0, 0, 0, 0.5),
-    0 0 22px rgba(212, 175, 55, 0.4),
-    inset 0 0 18px rgba(212, 175, 55, 0.25);
-}
+      transform: translateY(-6px);
+      box-shadow:
+        0 12px 24px rgba(0, 0, 0, 0.5),
+        0 0 22px rgba(212, 175, 55, 0.4),
+        inset 0 0 18px rgba(212, 175, 55, 0.25);
+    }
 
     .producto img {
       width: 100%;
@@ -160,36 +191,36 @@
       margin: 0 auto 20px;
     }
 
-    /* Animación de pulso suave para el botón de WhatsApp */
-@keyframes pulsoSuave {
-  0%, 100% {
-    box-shadow: 0 0 12px rgba(37, 211, 102, 0.4),
-                0 0 24px rgba(37, 211, 102, 0.25);
-  }
-  50% {
-    box-shadow: 0 0 18px rgba(37, 211, 102, 0.6),
-                0 0 32px rgba(37, 211, 102, 0.35);
-  }
-}
+    /* Animación de pulso para el botón de WhatsApp */
+    @keyframes pulsoSuave {
+      0%, 100% {
+        box-shadow: 0 0 12px rgba(37, 211, 102, 0.4),
+                    0 0 24px rgba(37, 211, 102, 0.25);
+      }
+      50% {
+        box-shadow: 0 0 18px rgba(37, 211, 102, 0.6),
+                    0 0 32px rgba(37, 211, 102, 0.35);
+      }
+    }
 
-.btn-whatsapp {
-  display: inline-block;
-  background: #25D366;
-  color: white;
-  padding: 12px 28px;
-  border-radius: 24px;
-  text-decoration: none;
-  font-weight: 600;
-  font-family: 'Montserrat', sans-serif;
-  animation: pulsoSuave 4s ease-in-out infinite;
-  transition: background 0.3s, transform 0.2s;
-}
+    .btn-whatsapp {
+      display: inline-block;
+      background: #25D366;
+      color: white;
+      padding: 12px 28px;
+      border-radius: 24px;
+      text-decoration: none;
+      font-weight: 600;
+      font-family: 'Montserrat', sans-serif;
+      animation: pulsoSuave 4s ease-in-out infinite;
+      transition: background 0.3s, transform 0.2s;
+    }
 
-.btn-whatsapp:hover {
-  background: #128C7E;
-  transform: scale(1.05);
-  animation-play-state: paused;
-}
+    .btn-whatsapp:hover {
+      background: #128C7E;
+      transform: scale(1.05);
+      animation-play-state: paused;
+    }
 
     footer {
       text-align: center;
@@ -218,22 +249,26 @@
         max-width: 95%;
       }
       .video-fondo video {
-        opacity: 0.75; /* más transparente en móvil */
+        opacity: 0.75;
+      }
+      .header {
+        min-height: auto;
+        padding: 40px 20px;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Fondo de video -->
+  <!-- Fondo de video (sin loop) -->
   <div class="video-fondo">
-    <video autoplay muted loop playsinline>
-      <source src="img/fondo-br.mp4" type="video/mp4">
-      Tu navegador no soporta el video de fondo.
+    <video autoplay muted playsinline id="hero-video">
+      <source src="img/brconfecciones-hero.mp4" type="video/mp4">
+      Tu navegador no soporta el video.
     </video>
   </div>
 
-  <div class="header">
+  <div class="header" id="header-section">
     <img src="img/Logo1.jpg" alt="BR Confecciones - Logo">
     <h1>BR Confecciones</h1>
     <p>Confección artesanal a medida para toda la familia. Disfraces, ropa de baile, cortinas, accesorios y más — hechos con dedicación y calidad.</p>
@@ -288,8 +323,25 @@
     © 2025. Todos los derechos reservados.
   </footer>
 
+  <!-- JavaScript opcional: animación al finalizar el video -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const video = document.getElementById('hero-video');
+      const header = document.getElementById('header-section');
+
+      video.addEventListener('ended', function() {
+        // Agrega clases para mostrar logo y texto con fade in
+        header.classList.add('show-logo', 'show-text');
+      });
+
+      // Si querés que el logo aparezca también al cargar (sin esperar el video)
+      // header.classList.add('show-logo', 'show-text');
+    });
+  </script>
+
 </body>
 </html>
+
 
 
 
