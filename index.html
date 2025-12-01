@@ -21,18 +21,18 @@
       overflow-x: hidden;
     }
 
-    /* Contenedor del video de fondo */
-    .video-fondo {
+    /* Fondo general en loop (telas/hilos) */
+    .fondo-loop {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      height: 100vh;
+      height: 100%;
       z-index: -1;
       overflow: hidden;
     }
 
-    .video-fondo video {
+    .fondo-loop video {
       min-width: 100%;
       min-height: 100%;
       width: auto;
@@ -45,69 +45,51 @@
       opacity: 0.85;
     }
 
-    .header {
+    /* Video de cabecera (sin loop) */
+    .video-cabecera {
+      width: 100%;
+      max-width: 800px;
+      margin: 60px auto 20px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      position: relative;
+      z-index: 1;
+    }
+
+    .video-cabecera video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Texto descriptivo (debajo del video) */
+    .descripcion {
       text-align: center;
-      padding: 60px 20px 40px;
+      padding: 20px 20px 40px;
+      max-width: 700px;
+      margin: 0 auto;
       background: rgba(20, 15, 12, 0.85);
       backdrop-filter: blur(2px);
+      border-top: 1px solid #3a2e25;
       border-bottom: 1px solid #3a2e25;
       position: relative;
       z-index: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      max-height: 100vh;
-      overflow: hidden;
     }
 
-    .header img {
-      max-width: 320px;
-      height: auto;
-      margin: 0 auto 20px;
-      display: block;
-      filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.3));
-      opacity: 0;
-      transform: scale(0.9);
-      transition: opacity 1.5s ease-out, transform 1.5s ease-out;
-    }
-
-    .header.show-logo img {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    .header h1 {
+    .descripcion h1 {
       font-family: 'Cormorant Garamond', serif;
       font-size: 2.4em;
       color: #f5e6cc;
       margin: 15px 0;
       text-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 2s ease-out, transform 2s ease-out;
     }
 
-    .header.show-text h1 {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .header p {
+    .descripcion p {
       font-size: 1.1em;
       color: #d4c5a8;
-      max-width: 700px;
       margin: 20px auto;
       font-weight: 400;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 2.5s ease-out, transform 2.5s ease-out;
-    }
-
-    .header.show-text p {
-      opacity: 1;
-      transform: translateY(0);
     }
 
     .galeria {
@@ -242,34 +224,38 @@
 
     /* Responsive */
     @media (max-width: 600px) {
-      .header h1 {
-        font-size: 2em;
+      .video-cabecera {
+        margin: 40px 10px 10px;
+      }
+      .descripcion {
+        padding: 20px 10px;
       }
       .producto {
         max-width: 95%;
-      }
-      .video-fondo video {
-        opacity: 0.75;
-      }
-      .header {
-        min-height: auto;
-        padding: 40px 20px;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Fondo de video (sin loop) -->
-  <div class="video-fondo">
+  <!-- Fondo general en loop -->
+  <div class="fondo-loop">
+    <video autoplay muted loop playsinline>
+      <source src="img/fondo-br.mp4" type="video/mp4">
+      Tu navegador no soporta el video de fondo.
+    </video>
+  </div>
+
+  <!-- Video de cabecera (sin loop) -->
+  <div class="video-cabecera">
     <video autoplay muted playsinline id="hero-video">
       <source src="img/brconfecciones-hero.mp4" type="video/mp4">
       Tu navegador no soporta el video.
     </video>
   </div>
 
-  <div class="header" id="header-section">
-    <img src="img/Logo1.jpg" alt="BR Confecciones - Logo">
+  <!-- Descripción (debajo del video, sin logo) -->
+  <div class="descripcion">
     <h1>BR Confecciones</h1>
     <p>Confección artesanal a medida para toda la familia. Disfraces, ropa de baile, cortinas, accesorios y más — hechos con dedicación y calidad.</p>
   </div>
@@ -323,24 +309,9 @@
     © 2025. Todos los derechos reservados.
   </footer>
 
-  <!-- JavaScript opcional: animación al finalizar el video -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const video = document.getElementById('hero-video');
-      const header = document.getElementById('header-section');
-
-      video.addEventListener('ended', function() {
-        // Agrega clases para mostrar logo y texto con fade in
-        header.classList.add('show-logo', 'show-text');
-      });
-
-      // Si querés que el logo aparezca también al cargar (sin esperar el video)
-      // header.classList.add('show-logo', 'show-text');
-    });
-  </script>
-
 </body>
 </html>
+
 
 
 
