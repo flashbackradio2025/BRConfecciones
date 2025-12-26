@@ -94,7 +94,33 @@
       height: auto;
       border-radius: 8px;
       display: block;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), inset 0 0 8px rgba(212, 175, 55, 0.1);
+      border: 1px solid #3a2e25;
+    }
+
+        .gallery-item {
+      position: relative;
+      display: block;
+    }
+
+    .gallery-item .caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(31, 24, 19, 0.85);
+      color: #d4c5a8;
+      padding: 8px 12px;
+      font-size: 0.85em;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-top: 1px solid #3a2e25;
+      border-radius: 0 0 8px 8px;
+    }
+
+    .gallery-item:hover .caption {
+      opacity: 1;
     }
 
     footer {
@@ -163,4 +189,5 @@
 
 </body>
 </html>
+
 
