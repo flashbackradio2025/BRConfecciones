@@ -15,23 +15,71 @@
       color: #fff;
       line-height: 1.6;
     }
-    .header {
-      text-align: center;
-      padding: 30px 20px;
-      background: rgba(20, 15, 12, 0.85);
-      border-bottom: 1px solid #3a2e25;
+
+    /* Video de cabecera */
+    .video-header {
+      width: 100%;
+      max-width: 800px;
+      margin: 40px auto 20px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      position: relative;
+      z-index: 1;
     }
-    .header h1 {
+
+    .video-header video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Caja de texto y botón */
+    .info-box {
+      text-align: center;
+      padding: 20px;
+      max-width: 700px;
+      margin: 0 auto 30px;
+      background: rgba(20, 15, 12, 0.85);
+      backdrop-filter: blur(2px);
+      border-radius: 12px;
+      border: 1px solid #3a2e25;
+      position: relative;
+      z-index: 1;
+    }
+
+    .info-box h1 {
       font-family: 'Cormorant Garamond', serif;
       color: #f5e6cc;
-      font-size: 2.2em;
+      font-size: 2em;
+      margin: 0 0 10px;
+      text-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
     }
-    .header a {
+
+    .info-box p {
+      font-size: 1.1em;
+      color: #d4c5a8;
+      margin: 10px 0 20px;
+      font-weight: 400;
+    }
+
+    .info-box a {
+      display: inline-block;
       color: #d4c5a8;
       text-decoration: none;
-      display: inline-block;
-      margin-top: 10px;
+      padding: 8px 16px;
+      border: 1px solid #3a2e25;
+      border-radius: 18px;
+      transition: all 0.3s ease;
     }
+
+    .info-box a:hover {
+      background: rgba(212, 175, 55, 0.1);
+      border-color: #d4c5a8;
+      color: #ffffff;
+    }
+
+    /* Grid de galería */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -40,6 +88,7 @@
       max-width: 1200px;
       margin: 0 auto;
     }
+
     .grid img {
       width: 100%;
       height: auto;
@@ -47,6 +96,7 @@
       display: block;
       box-shadow: 0 4px 8px rgba(0,0,0,0.4);
     }
+
     footer {
       text-align: center;
       padding: 20px;
@@ -57,21 +107,29 @@
 </head>
 <body>
 
-  <div class="header">
+  <!-- Video de cabecera -->
+  <div class="video-header">
+    <video autoplay muted playsinline id="intro-video">
+      <source src="img/galeria-intro.mp4" type="video/mp4">
+      Tu navegador no soporta el video.
+    </video>
+  </div>
+
+  <!-- Caja de texto y botón -->
+  <div class="info-box">
     <h1>Galería de Trabajos</h1>
     <p>Todos hechos a mano, con dedicación y materiales de calidad.</p>
     <a href="index.html">← Volver a BR Confecciones</a>
   </div>
 
+  <!-- Galería de fotos -->
   <div class="grid">
-    <!-- Reemplazá estos nombres por tus fotos reales -->
     <img src="img/trabajo1.jpg" alt="Trabajo 1">
     <img src="img/trabajo2.jpg" alt="Trabajo 2">
     <img src="img/trabajo3.jpg" alt="Trabajo 3">
     <img src="img/trabajo4.jpg" alt="Trabajo 4">
     <img src="img/trabajo5.jpg" alt="Trabajo 5">
     <img src="img/trabajo6.jpg" alt="Trabajo 6">
-    <!-- Agregá tantas como quieras -->
   </div>
 
   <footer>
