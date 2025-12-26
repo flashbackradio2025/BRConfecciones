@@ -171,14 +171,19 @@
     }
 
     .global-lightbox-img {
-      width: 100%;
+      max-width: 95vw;
+      max-height: 85vh;
+      width: auto;
       height: auto;
       border-radius: 8px;
       box-shadow:
-        0 0 30px rgba(212, 175, 55, 0.4),
-        inset 0 0 12px rgba(212, 175, 55, 0.2);
+       0 0 30px rgba(212, 175, 55, 0.4),
+       inset 0 0 12px rgba(212, 175, 55, 0.2);
       border: 1px solid #d4c5a8;
-    }
+      display: block;
+      margin: 0 auto;
+      object-fit: contain;
+     }
 
     .close {
       position: absolute;
@@ -383,5 +388,6 @@
 
 </body>
 </html>
+
 
 
