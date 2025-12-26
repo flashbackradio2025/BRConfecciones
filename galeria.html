@@ -79,14 +79,28 @@
       color: #ffffff;
     }
 
-    /* Grid de galería */
+    /* Galería */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
+      gap: 25px;
       padding: 20px;
       max-width: 1200px;
       margin: 0 auto;
+    }
+
+    .gallery-item {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 320px;
+      overflow: hidden;
+      border-radius: 8px;
+      background: #1f1813;
+      border: 1px solid #3a2e25;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     }
 
     .grid img {
@@ -96,22 +110,17 @@
       object-position: center;
       border-radius: 8px;
       display: block;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), inset 0 0 8px rgba(212, 175, 55, 0.1);
       border: 1px solid #3a2e25;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     }
 
-    .gallery-item {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 320px; /* Altura fija */
-      overflow: hidden;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
-      background: #1f1813;
-      border: 1px solid #3a2e25;
+    .gallery-item:hover img {
+      transform: scale(1.05);
+      box-shadow:
+        0 6px 18px rgba(0, 0, 0, 0.6),
+        0 0 20px rgba(212, 175, 55, 0.35),
+        inset 0 0 14px rgba(212, 175, 55, 0.2);
     }
 
     .gallery-item .caption {
@@ -135,6 +144,57 @@
       opacity: 1;
     }
 
+    /* Lightbox */
+    .global-lightbox {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+    }
+
+    .global-lightbox-content {
+      position: relative;
+      margin: 5% auto;
+      padding: 20px;
+      width: 90%;
+      max-width: 900px;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .global-lightbox-img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow:
+        0 0 30px rgba(212, 175, 55, 0.4),
+        inset 0 0 12px rgba(212, 175, 55, 0.2);
+      border: 1px solid #d4c5a8;
+    }
+
+    .close {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      color: #f5e6cc;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      text-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
+    }
+
+    .close:hover {
+      color: #ffffff;
+    }
+
     footer {
       text-align: center;
       padding: 20px;
@@ -156,6 +216,610 @@
   <!-- Caja de texto y botón -->
   <div class="info-box">
     <h1>Galería de Trabajos</h1>
+    
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Galería – BR Confecciones</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: #1b1410;
+      color: #fff;
+      line-height: 1.6;
+    }
+
+    /* Video de cabecera */
+    .video-header {
+      width: 100%;
+      max-width: 800px;
+      margin: 40px auto 20px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      position: relative;
+      z-index: 1;
+    }
+
+    .video-header video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Caja de texto y botón */
+    .info-box {
+      text-align: center;
+      padding: 20px;
+      max-width: 700px;
+      margin: 0 auto 30px;
+      background: rgba(20, 15, 12, 0.85);
+      backdrop-filter: blur(2px);
+      border-radius: 12px;
+      border: 1px solid #3a2e25;
+      position: relative;
+      z-index: 1;
+    }
+
+    .info-box h1 {
+      font-family: 'Cormorant Garamond', serif;
+      color: #f5e6cc;
+      font-size: 2em;
+      margin: 0 0 10px;
+      text-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+    }
+
+    .info-box p {
+      font-size: 1.1em;
+      color: #d4c5a8;
+      margin: 10px 0 20px;
+      font-weight: 400;
+    }
+
+    .info-box a {
+      display: inline-block;
+      color: #d4c5a8;
+      text-decoration: none;
+      padding: 8px 16px;
+      border: 1px solid #3a2e25;
+      border-radius: 18px;
+      transition: all 0.3s ease;
+    }
+
+    .info-box a:hover {
+      background: rgba(212, 175, 55, 0.1);
+      border-color: #d4c5a8;
+      color: #ffffff;
+    }
+
+    /* Galería */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 25px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .gallery-item {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 320px;
+      overflow: hidden;
+      border-radius: 8px;
+      background: #1f1813;
+      border: 1px solid #3a2e25;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .grid img {
+      max-width: 90%;
+      max-height: 240px;
+      object-fit: contain;
+      object-position: center;
+      border-radius: 8px;
+      display: block;
+      border: 1px solid #3a2e25;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.05);
+      box-shadow:
+        0 6px 18px rgba(0, 0, 0, 0.6),
+        0 0 20px rgba(212, 175, 55, 0.35),
+        inset 0 0 14px rgba(212, 175, 55, 0.2);
+    }
+
+    .gallery-item .caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(31, 24, 19, 0.85);
+      color: #d4c5a8;
+      padding: 8px 12px;
+      font-size: 0.85em;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-top: 1px solid #3a2e25;
+      border-radius: 0 0 8px 8px;
+      z-index: 1;
+    }
+
+    .gallery-item:hover .caption {
+      opacity: 1;
+    }
+
+    /* Lightbox */
+    .global-lightbox {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+    }
+
+    .global-lightbox-content {
+      position: relative;
+      margin: 5% auto;
+      padding: 20px;
+      width: 90%;
+      max-width: 900px;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .global-lightbox-img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow:
+        0 0 30px rgba(212, 175, 55, 0.4),
+        inset 0 0 12px rgba(212, 175, 55, 0.2);
+      border: 1px solid #d4c5a8;
+    }
+
+    .close {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      color: #f5e6cc;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      text-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
+    }
+
+    .close:hover {
+      color: #ffffff;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #b8a580;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Video de cabecera -->
+  <div class="video-header">
+    <video autoplay muted playsinline id="intro-video">
+      <source src="img/galeria-intro.mp4" type="video/mp4">
+      Tu navegador no soporta el video.
+    </video>
+  </div>
+
+  <!-- Caja de texto y botón -->
+  <div class="info-box">
+    <h1>Galería de Trabajos</h1>
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Galería – BR Confecciones</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: #1b1410;
+      color: #fff;
+      line-height: 1.6;
+    }
+
+    /* Video de cabecera */
+    .video-header {
+      width: 100%;
+      max-width: 800px;
+      margin: 40px auto 20px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      position: relative;
+      z-index: 1;
+    }
+
+    .video-header video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Caja de texto y botón */
+    .info-box {
+      text-align: center;
+      padding: 20px;
+      max-width: 700px;
+      margin: 0 auto 30px;
+      background: rgba(20, 15, 12, 0.85);
+      backdrop-filter: blur(2px);
+      border-radius: 12px;
+      border: 1px solid #3a2e25;
+      position: relative;
+      z-index: 1;
+    }
+
+    .info-box h1 {
+      font-family: 'Cormorant Garamond', serif;
+      color: #f5e6cc;
+      font-size: 2em;
+      margin: 0 0 10px;
+      text-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+    }
+
+    .info-box p {
+      font-size: 1.1em;
+      color: #d4c5a8;
+      margin: 10px 0 20px;
+      font-weight: 400;
+    }
+
+    .info-box a {
+      display: inline-block;
+      color: #d4c5a8;
+      text-decoration: none;
+      padding: 8px 16px;
+      border: 1px solid #3a2e25;
+      border-radius: 18px;
+      transition: all 0.3s ease;
+    }
+
+    .info-box a:hover {
+      background: rgba(212, 175, 55, 0.1);
+      border-color: #d4c5a8;
+      color: #ffffff;
+    }
+
+    /* Galería */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 25px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .gallery-item {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 320px;
+      overflow: hidden;
+      border-radius: 8px;
+      background: #1f1813;
+      border: 1px solid #3a2e25;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .grid img {
+      max-width: 90%;
+      max-height: 240px;
+      object-fit: contain;
+      object-position: center;
+      border-radius: 8px;
+      display: block;
+      border: 1px solid #3a2e25;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.05);
+      box-shadow:
+        0 6px 18px rgba(0, 0, 0, 0.6),
+        0 0 20px rgba(212, 175, 55, 0.35),
+        inset 0 0 14px rgba(212, 175, 55, 0.2);
+    }
+
+    .gallery-item .caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(31, 24, 19, 0.85);
+      color: #d4c5a8;
+      padding: 8px 12px;
+      font-size: 0.85em;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-top: 1px solid #3a2e25;
+      border-radius: 0 0 8px 8px;
+      z-index: 1;
+    }
+
+    .gallery-item:hover .caption {
+      opacity: 1;
+    }
+
+    /* Lightbox */
+    .global-lightbox {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+    }
+
+    .global-lightbox-content {
+      position: relative;
+      margin: 5% auto;
+      padding: 20px;
+      width: 90%;
+      max-width: 900px;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .global-lightbox-img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow:
+        0 0 30px rgba(212, 175, 55, 0.4),
+        inset 0 0 12px rgba(212, 175, 55, 0.2);
+      border: 1px solid #d4c5a8;
+    }
+
+    .close {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      color: #f5e6cc;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      text-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
+    }
+
+    .close:hover {
+      color: #ffffff;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #b8a580;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Video de cabecera -->
+  <div class="video-header">
+    <video autoplay muted playsinline id="intro-video">
+      <source src="img/galeria-intro.mp4" type="video/mp4">
+      Tu navegador no soporta el video.
+    </video>
+  </div>
+
+  <!-- Caja de texto y botón -->
+  <div class="info-box">
+    <h1>Galería de Trabajos</h1>
+    <p>Realizados con dedicación y a medida... Aqui es donde tu Estilo cobra Vida</p>
+    <a href="index.html">← Volver a BR Confecciones</a>
+  </div>
+
+  <!-- Galería de fotos -->
+  <div class="grid">
+    <div class="gallery-item">
+      <img src="img/Blusa de Verano A.png" alt="Blusa de Verano">
+      <div class="caption">Blusa de verano con detalles bordados</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Blusa de Verano B.png" alt="Blusa de Verano">
+      <div class="caption">Blusa de verano, corte holgado y fresco</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Blusa de Verano C.png" alt="Blusa de Verano">
+      <div class="caption">Blusa de verano con mangas cortas y cuello redondo</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Brujita 2 añitos.png" alt="Disfraz Brujita de 2 Añitos">
+      <div class="caption">Disfraz de bruja para niña de 2 años</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Buzo Polera.png" alt="Buzo Polera">
+      <div class="caption">Buzo polera con capucha y bolsillo frontal</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Chaleco.png" alt="Chaleco">
+      <div class="caption">Chaleco acolchado con botones decorativos</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Chaquetita Raton Timoteo.png" alt="Disfraz CHaqueta Raton Timoteo">
+      <div class="caption">Chaquetita de ratón Timoteo para bebé</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Conejo de Alicia.png" alt="Disfraz Conejo (Alicia en el Pais de las Maravillas">
+      <div class="caption">Disfraz de conejo blanco de Alicia</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Dama Antigua A.png" alt="Disfraz Dama Antigua">
+      <div class="caption">Disfraz de dama antigua con volantes</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Dama Antigua.png" alt="Disfraz Dama Antigua">
+      <div class="caption">Disfraz de dama antigua, estilo barroco</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Diablita.png" alt="Disfraz Diablita">
+      <div class="caption">Disfraz de diablita con cuernos y cola</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Granadero.png" alt="Disfraz Granadero">
+      <div class="caption">Disfraz de granadero con casaca y sombrero</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Guardapolvo.png" alt="Guardapolvo">
+      <div class="caption">Guardapolvo largo con cinturón ajustable</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Jazmin Adulto.png" alt="Disfraz de Jazmin (Adulto)">
+      <div class="caption">Disfraz de Jasmine para adulta</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Jazmin.png" alt="Disfraz de Jazmin (Niña)">
+      <div class="caption">Disfraz de Jasmine para niña</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Kimono A.png" alt="Kimono">
+      <div class="caption">Kimono de seda con estampado floral</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Merlina Peque.png" alt="Disfraz de Merlina (Niña)">
+      <div class="caption">Disfraz de Merlina para niña pequeña</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Minie.png" alt="Disfraz de Minie (Niña)">
+      <div class="caption">Disfraz de Minnie Mouse para niña</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Pechera niña.png" alt="Pechera (Niña)">
+      <div class="caption">Pechera bordada para niña</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Pechera niña1.png" alt="Pechera (Niña)">
+      <div class="caption">Pechera con volantes para niña</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Pechera1.png" alt="Pechera (Adulto)">
+      <div class="caption">Pechera de algodón para adulto</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Pechera2.png" alt="Pechera (Adulto)">
+      <div class="caption">Pechera con botones y bordado</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Polera Piel A.png" alt="Polera (Animal Print)">
+      <div class="caption">Polera con estampado animal print</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Ponchito Bebe 1.png" alt="Ponchito (Bebe)">
+      <div class="caption">Ponchito de lana para bebé</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Ponchito bebe 2.png" alt="TPonchito (Bebe)">
+      <div class="caption">Ponchito con capucha para bebé</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Spider Girl.png" alt="Disfraz de ¨Spider Girl¨">
+      <div class="caption">Disfraz de Spider-Girl con máscara</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Stich.png" alt="Disfraz de Stich (Niña)">
+      <div class="caption">Disfraz de Stitch para niña</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Vestidito con Torera_InPixio.png" alt="Vestidito c/Torera (Bebe)">
+      <div class="caption">Vestidito con torera para bebé</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Vestido.png" alt="Vestido (Adulto)">
+      <div class="caption">Vestido largo con corte entallado</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Vestido1.png" alt="Vestido (Adulto)">
+      <div class="caption">Vestido con escote en V y falda plisada</div>
+    </div>
+  </div>
+
+  <!-- Lightbox único -->
+  <div id="global-lightbox" class="global-lightbox">
+    <div class="global-lightbox-content">
+      <span class="close">&times;</span>
+      <img id="lightbox-expanded-img" class="global-lightbox-img">
+    </div>
+  </div>
+
+  <footer>
+    BR Confecciones — Capilla del Monte, Córdoba<br>
+    © 2025
+  </footer>
+
+  <!-- Script para el lightbox -->
+  <script>
+    document.querySelectorAll('.gallery-item img').forEach(img => {
+      img.addEventListener('click', function(e) {
+        e.preventDefault();
+        const src = this.src;
+        const lightbox = document.getElementById('global-lightbox');
+        const expandedImg = document.getElementById('lightbox-expanded-img');
+        expandedImg.src = src;
+        lightbox.style.display = 'block';
+      });
+    });
+
+    document.getElementById('global-lightbox').addEventListener('click', function(e) {
+      if (e.target === this) {
+        this.style.display = 'none';
+      }
+    });
+
+    document.querySelector('.close').addEventListener('click', function() {
+      document.getElementById('global-lightbox').style.display = 'none';
+    });
+  </script>
+
+</body>
+</html>
     <p>Todos hechos a mano, con dedicación y materiales de calidad.</p>
     <a href="index.html">← Volver a BR Confecciones</a>
   </div>
@@ -284,13 +948,212 @@
     </div>
   </div>
 
+  <!-- Lightbox único -->
+  <div id="global-lightbox" class="global-lightbox">
+    <div class="global-lightbox-content">
+      <span class="close">&times;</span>
+      <img id="lightbox-expanded-img" class="global-lightbox-img">
+    </div>
+  </div>
+
   <footer>
     BR Confecciones — Capilla del Monte, Córdoba<br>
     © 2025
   </footer>
 
+  <!-- Script para el lightbox -->
+  <script>
+    document.querySelectorAll('.gallery-item img').forEach(img => {
+      img.addEventListener('click', function(e) {
+        e.preventDefault();
+        const src = this.src;
+        const lightbox = document.getElementById('global-lightbox');
+        const expandedImg = document.getElementById('lightbox-expanded-img');
+        expandedImg.src = src;
+        lightbox.style.display = 'block';
+      });
+    });
+
+    document.getElementById('global-lightbox').addEventListener('click', function(e) {
+      if (e.target === this) {
+        this.style.display = 'none';
+      }
+    });
+
+    document.querySelector('.close').addEventListener('click', function() {
+      document.getElementById('global-lightbox').style.display = 'none';
+    });
+  </script>
+
+</body>
+</html>Trabajos hechos a medida, con dedicación donde la Magia cobra Vida.</p>
+    <a href="index.html">← Volver a BR Confecciones</a>
+  </div>
+
+  <!-- Galería de fotos -->
+  <div class="grid">
+    <div class="gallery-item">
+      <img src="img/Blusa de Verano A.png" alt="Blusa de Verano">
+      <div class="caption">Blusa de verano con detalles bordados</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Blusa de Verano B.png" alt="Blusa de Verano">
+      <div class="caption">Blusa de verano, corte holgado y fresco</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Blusa de Verano C.png" alt="Blusa de Verano">
+      <div class="caption">Blusa de verano con mangas cortas y cuello redondo</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Brujita 2 añitos.png" alt="Disfraz Brujita de 2 Añitos">
+      <div class="caption">Disfraz de bruja para niña de 2 años</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Buzo Polera.png" alt="Buzo Polera">
+      <div class="caption">Buzo polera con capucha y bolsillo frontal</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Chaleco.png" alt="Chaleco">
+      <div class="caption">Chaleco acolchado con botones decorativos</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Chaquetita Raton Timoteo.png" alt="Disfraz CHaqueta Raton Timoteo">
+      <div class="caption">Chaquetita de ratón Timoteo para bebé</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Conejo de Alicia.png" alt="Disfraz Conejo (Alicia en el Pais de las Maravillas">
+      <div class="caption">Disfraz de conejo blanco de Alicia</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Dama Antigua A.png" alt="Disfraz Dama Antigua">
+      <div class="caption">Disfraz de dama antigua con volantes</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Dama Antigua.png" alt="Disfraz Dama Antigua">
+      <div class="caption">Disfraz de dama antigua, estilo barroco</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Diablita.png" alt="Disfraz Diablita">
+      <div class="caption">Disfraz de diablita con cuernos y cola</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Granadero.png" alt="Disfraz Granadero">
+      <div class="caption">Disfraz de granadero con casaca y sombrero</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Guardapolvo.png" alt="Guardapolvo">
+      <div class="caption">Guardapolvo largo con cinturón ajustable</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Jazmin Adulto.png" alt="Disfraz de Jazmin (Adulto)">
+      <div class="caption">Disfraz de Jasmine para adulta</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Jazmin.png" alt="Disfraz de Jazmin (Niña)">
+      <div class="caption">Disfraz de Jasmine para niña</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Kimono A.png" alt="Kimono">
+      <div class="caption">Kimono de seda con estampado floral</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Merlina Peque.png" alt="Disfraz de Merlina (Niña)">
+      <div class="caption">Disfraz de Merlina para niña pequeña</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Minie.png" alt="Disfraz de Minie (Niña)">
+      <div class="caption">Disfraz de Minnie Mouse para niña</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Pechera niña.png" alt="Pechera (Niña)">
+      <div class="caption">Pechera bordada para niña</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Pechera niña1.png" alt="Pechera (Niña)">
+      <div class="caption">Pechera con volantes para niña</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Pechera1.png" alt="Pechera (Adulto)">
+      <div class="caption">Pechera de algodón para adulto</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Pechera2.png" alt="Pechera (Adulto)">
+      <div class="caption">Pechera con botones y bordado</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Polera Piel A.png" alt="Polera (Animal Print)">
+      <div class="caption">Polera con estampado animal print</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Ponchito Bebe 1.png" alt="Ponchito (Bebe)">
+      <div class="caption">Ponchito de lana para bebé</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Ponchito bebe 2.png" alt="TPonchito (Bebe)">
+      <div class="caption">Ponchito con capucha para bebé</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Spider Girl.png" alt="Disfraz de ¨Spider Girl¨">
+      <div class="caption">Disfraz de Spider-Girl con máscara</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Stich.png" alt="Disfraz de Stich (Niña)">
+      <div class="caption">Disfraz de Stitch para niña</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Vestidito con Torera_InPixio.png" alt="Vestidito c/Torera (Bebe)">
+      <div class="caption">Vestidito con torera para bebé</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Vestido.png" alt="Vestido (Adulto)">
+      <div class="caption">Vestido largo con corte entallado</div>
+    </div>
+    <div class="gallery-item">
+      <img src="img/Vestido1.png" alt="Vestido (Adulto)">
+      <div class="caption">Vestido con escote en V y falda plisada</div>
+    </div>
+  </div>
+
+  <!-- Lightbox único -->
+  <div id="global-lightbox" class="global-lightbox">
+    <div class="global-lightbox-content">
+      <span class="close">&times;</span>
+      <img id="lightbox-expanded-img" class="global-lightbox-img">
+    </div>
+  </div>
+
+  <footer>
+    BR Confecciones — Capilla del Monte, Córdoba<br>
+    © 2025
+  </footer>
+
+  <!-- Script para el lightbox -->
+  <script>
+    document.querySelectorAll('.gallery-item img').forEach(img => {
+      img.addEventListener('click', function(e) {
+        e.preventDefault();
+        const src = this.src;
+        const lightbox = document.getElementById('global-lightbox');
+        const expandedImg = document.getElementById('lightbox-expanded-img');
+        expandedImg.src = src;
+        lightbox.style.display = 'block';
+      });
+    });
+
+    document.getElementById('global-lightbox').addEventListener('click', function(e) {
+      if (e.target === this) {
+        this.style.display = 'none';
+      }
+    });
+
+    document.querySelector('.close').addEventListener('click', function() {
+      document.getElementById('global-lightbox').style.display = 'none';
+    });
+  </script>
+
 </body>
 </html>
+
 
 
 
